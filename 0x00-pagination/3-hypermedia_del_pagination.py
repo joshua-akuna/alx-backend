@@ -1,3 +1,6 @@
+#!/usr/bin/env python3
+"""Defines the index_range function and the Server class"""
+
 import csv
 import math
 from typing import List, Dict
