@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 """Defines the index_range function"""
 
+
 def index_range(page, page_size):
     """
     the function takes in two integers page and page_size and returns
