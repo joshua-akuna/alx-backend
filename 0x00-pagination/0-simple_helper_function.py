@@ -1,4 +1,4 @@
-#!/usr/bin/python3
+#!/usr/bin/env python3
 """Defines the index_range function"""
 
 def index_range(page, page_size):
