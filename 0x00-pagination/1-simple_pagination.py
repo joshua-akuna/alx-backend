@@ -1,4 +1,4 @@
-#!/usr/bin/python3
+#!/usr/bin/env python3
 """Defines the index_range function and Server class
 """
 
@@ -57,6 +57,6 @@ class Server:
 
         try:
             index = index_range(page, page_size)
-            return dataset[index[0] : index[1]]
+            return dataset[index[0]: index[1]]
         except IndexError:
             return []
