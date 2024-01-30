@@ -13,9 +13,10 @@ class BasicCache(BaseCaching):
         """
         puts a key value pair into the cache
         """
-        self.cache_data[key] = item
+        if key is not None and item is not None:
+            self.cache_data[key] = item
 
     def get(self, key):
         """get a value from the cache based on the key arg
         """
-        return self.cache_data.get(key)
+        return self.cache_data.get(key, None)
