@@ -35,7 +35,7 @@ class LIFOCache(BaseCaching):
             you must print DISCARD: with the key discarded and
             following by a new line
         """
-        if k is not None or v is not None:
+        if k is not None and v is not None:
             self.cache_data[k] = v
             self.cache_list.append(k)
             if (len(self.cache_data) > BaseCaching.MAX_ITEMS):
