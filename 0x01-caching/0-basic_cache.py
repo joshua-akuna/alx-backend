@@ -5,6 +5,7 @@ Defines the sub class BasicCache
 """
 from base_caching import BaseCaching
 
+
 class BasicCache(BaseCaching):
     """
     Implements a basic cache
