@@ -78,3 +78,7 @@ Copy the dump.rdb from the redis-5.0.7 directory into the root of the Queuing pr
 Requirements:
 
 * Running get Holberton in the client, should return School
+
+File: [README.md](), [dump.rdb]()
+
+
