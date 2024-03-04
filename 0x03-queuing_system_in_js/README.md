@@ -90,7 +90,7 @@ Using Babel and ES6, write a script named 0-redis_client.js. It should connect t
 * It should log to the console the message Redis client not connected to the server: ERROR_MESSAGE when the connection to Redis does not work
 
 #### Requirements:
-* To import the library, you need to use the keyword impor
+* To import the library, you need to use the keyword import
 
 ```
 bob@dylan:~$ ps ax | grep redis-server
@@ -205,3 +205,169 @@ bob@dylan:~$
 ```
 
 File: [2-redis_op_async.js]()
+
+### 4. Node Redis client and advanced operations
+In a file named 4-redis_advanced_op.js, let’s use the client to store a hash value
+
+#### Create Hash:
+Using hset, let’s store the following:
+* The key of the hash should be HolbertonSchools
+* It should have a value for:
+    * Portland=50
+    * Seattle=80
+    * New York=20
+    * Bogota=20
+    * Cali=40
+    * Paris=2
+* Make sure you use redis.print for each hset
+#### Display Hash:
+Using hgetall, display the object stored in Redis. It should return the following:
+
+#### Requirements:
+Use callbacks for any of the operation, we will look at async operations later
+```
+bob@dylan:~$ npm run dev 4-redis_advanced_op.js 
+
+> queuing_system_in_js@1.0.0 dev /root
+> nodemon --exec babel-node --presets @babel/preset-env "4-redis_advanced_op.js"
+
+[nodemon] 2.0.4
+[nodemon] to restart at any time, enter `rs`
+[nodemon] watching path(s): *.*
+[nodemon] watching extensions: js,mjs,json
+[nodemon] starting `babel-node --presets @babel/preset-env 4-redis_advanced_op.js`
+Redis client connected to the server
+Reply: 1
+Reply: 1
+Reply: 1
+Reply: 1
+Reply: 1
+Reply: 1
+{
+  Portland: '50',
+  Seattle: '80',
+  'New York': '20',
+  Bogota: '20',
+  Cali: '40',
+  Paris: '2'
+}
+^C
+bob@dylan:~$
+```
+
+File:[4-redis_advanced_ops.js]()
+
+### 5. Node Redis client publisher and subscriber
+In a file named 5-subscriber.js, create a redis client:
+* On connect, it should log the message Redis client connected to the server
+* On error, it should log the message Redis client not connected to the server: ERROR MESSAGE
+* It should subscribe to the channel holberton school channel
+* When it receives message on the channel holberton school channel, it should log the message to the console
+* When the message is KILL_SERVER, it should unsubscribe and quit
+
+In a file named 5-publisher.js, create a redis client:
+* On connect, it should log the message Redis client connected to the server
+* On error, it should log the message Redis client not connected to the server: ERROR MESSAGE
+* Write a function named publishMessage:
+    * It will take two arguments: message (string), and time (integer - in ms)
+    * After time millisecond:
+        * The function should log to the console About to send MESSAGE
+        * The function should publish to the channel holberton school channel, the message passed in argument after the time passed in arguments
+* At the end of the file, call
+```
+publishMessage("Holberton Student #1 starts course", 100);
+publishMessage("Holberton Student #2 starts course", 200);
+publishMessage("KILL_SERVER", 300);
+publishMessage("Holberton Student #3 starts course", 400);
+```
+
+#### Requirements:
+* You only need one Redis server to execute the program
+* You will need to have two node processes to run each script at the same tim
+
+#### Terminal 1
+```
+bob@dylan:~$ npm run dev 5-subscriber.js
+
+> queuing_system_in_js@1.0.0 dev /root
+> nodemon --exec babel-node --presets @babel/preset-env "5-subscriber.js"
+
+[nodemon] 2.0.4
+[nodemon] to restart at any time, enter `rs`
+[nodemon] watching path(s): *.*
+[nodemon] watching extensions: js,mjs,json
+[nodemon] starting `babel-node --presets @babel/preset-env 5-subscriber.js`
+Redis client connected to the server
+```
+
+#### Terminal 2
+```
+bob@dylan:~$ npm run dev 5-publisher.js 
+
+> queuing_system_in_js@1.0.0 dev /root
+> nodemon --exec babel-node --presets @babel/preset-env "5-publisher.js"
+
+[nodemon] 2.0.4
+[nodemon] to restart at any time, enter `rs`
+[nodemon] watching path(s): *.*
+[nodemon] watching extensions: js,mjs,json
+[nodemon] starting `babel-node --presets @babel/preset-env 5-publisher.js`
+Redis client connected to the server
+About to send Holberton Student #1 starts course
+About to send Holberton Student #2 starts course
+About to send KILL_SERVER
+About to send Holberton Student #3 starts course
+^C
+bob@dylan:~$ 
+```
+
+#### And in the same time in Terminal 1
+```
+Redis client connected to the server
+Holberton Student #1 starts course
+Holberton Student #2 starts course
+KILL_SERVER
+[nodemon] clean exit - waiting for changes before restart
+^C
+bob@dylan:~$
+```
+Now you have a basic Redis-based queuing system where you have a process to generate job and a second one to process it. These 2 processes can be in 2 different servers, which we also call “background workers”.
+
+File: [5-publisher.js](), [5-subscriber.js]()
+
+### 6. Create the Job creato
+In a file named 6-job_creator.js:
+* Create a queue with Kue
+* Create an object containing the Job data with the following format
+
+```
+{
+  phoneNumber: string,
+  message: string,
+}
+```
+* Create a queue named push_notification_code, and create a job with the object created before
+* When the job is created without error, log to the console Notification job created: JOB ID
+* When the job is completed, log to the console Notification job completed
+* When the job is failing, log to the console Notification job faile
+
+```
+bob@dylan:~$ npm run dev 6-job_creator.js 
+
+> queuing_system_in_js@1.0.0 dev /root
+> nodemon --exec babel-node --presets @babel/preset-env "6-job_creator.js"
+
+[nodemon] 2.0.4
+[nodemon] to restart at any time, enter `rs`
+[nodemon] watching path(s): *.*
+[nodemon] watching extensions: js,mjs,json
+[nodemon] starting `babel-node --presets @babel/preset-env 6-job_creator.js`
+Notification job created: 1
+
+```
+
+Nothing else will happen - to process the job, go to the next task!
+
+If you execute multiple time this file, you will see the JOB ID increasing - it means you are storing new job to process…
+
+File: [6-job_creator.js]()
