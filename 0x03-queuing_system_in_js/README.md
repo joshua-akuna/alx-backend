@@ -47,18 +47,18 @@ $ cd redis-6.0.10
 $ make
 ```
 
-    * Start Redis in the background with src/redis-server
+* Start Redis in the background with src/redis-server
 
 ```
 $ src/redis-server &
 ```
-    * Make sure that the server is working with a ping src/redis-cli ping
+* Make sure that the server is working with a ping src/redis-cli ping
 
 ```
 PONG
 ```
 
-    * Using the Redis client again, set the value School for the key Holberton
+* Using the Redis client again, set the value School for the key Holberton
 
 ```
 127.0.0.1:[Port]> set Holberton School
@@ -67,7 +67,7 @@ OK
 "School"
 ```
 
-    * Kill the server with the process id of the redis-server (hint: use ps and grep)
+* Kill the server with the process id of the redis-server (hint: use ps and grep)
 
 ```
 $ kill [PID_OF_Redis_Server]
@@ -77,4 +77,4 @@ Copy the dump.rdb from the redis-5.0.7 directory into the root of the Queuing pr
 
 Requirements:
 
-    * Running get Holberton in the client, should return School
+* Running get Holberton in the client, should return School
